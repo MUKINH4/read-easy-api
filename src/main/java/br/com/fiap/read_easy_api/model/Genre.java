@@ -1,20 +1,46 @@
 package br.com.fiap.read_easy_api.model;
 
-import lombok.*;
+import java.util.Random;
 
-@Getter
-@Setter
 public class Genre {
-
     private Long id;
     private String name;
     private String icon;
 
     public Genre(Long id, String name, String icon){
-        this.id = id;
+        this.id = Math.abs(new Random().nextLong());
         this.name = name;
         this.icon = icon;
     }
 
 
+    
+    public String getName(){
+        return name;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+
+
+    public Long getId() {
+        return id;
+    }
+
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
 }
