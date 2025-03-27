@@ -1,19 +1,21 @@
 package br.com.fiap.read_easy_api.model;
 
-import java.util.Random;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Genre {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String icon;
-
-    public Genre(Long id, String name, String icon){
-        this.id = Math.abs(new Random().nextLong());
-        this.name = name;
-        this.icon = icon;
-    }
-
-
     
     public String getName(){
         return name;
@@ -24,7 +26,7 @@ public class Genre {
     }
 
     public String getIcon() {
-        return icon;
+        return icon.substring(0, 1).toUpperCase() + icon.substring(1);
     }
 
     public void setIcon(String icon) {
