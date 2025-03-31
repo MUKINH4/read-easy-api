@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.fiap.read_easy_api.model.Genre;
 import br.com.fiap.read_easy_api.repository.GenreRepository;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/genres")
@@ -40,7 +41,7 @@ public class GenreController {
 
 	@PostMapping
 	// @ResponseStatus(code = HttpStatus.CREATED)
-	public ResponseEntity<Genre> create(@RequestBody Genre genre) {
+	public ResponseEntity<Genre> create(@RequestBody @Valid Genre genre) {
 		log.info("Cadastrandênero " + genre.getName());
 		genreRepository.save(genre);
 		return ResponseEntity.status(201).body(genre);
