@@ -5,6 +5,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,10 +22,13 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.fiap.read_easy_api.model.Genre;
 import br.com.fiap.read_easy_api.repository.GenreRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/genres")
+
 public class GenreController {
 
     // @Autowired
@@ -35,11 +40,21 @@ public class GenreController {
 	private GenreRepository genreRepository;
 
 	@GetMapping
+	@Cacheable("genres")
+	@Operation(
+		tags = "Genres",
+		summary = "Listar gêneros"
+	)
 	public List<Genre> index() {
 		return genreRepository.findAll();
 	}
 
 	@PostMapping
+	@ResponseStatus(code = HttpStatus.CREATED)
+	@Operation(
+		responses = @ApiResponse(responseCode = "400", description = "Validação Falhou")
+	)
+	@CacheEvict(value = "genres", allEntries = true)
 	// @ResponseStatus(code = HttpStatus.CREATED)
 	public ResponseEntity<Genre> create(@RequestBody @Valid Genre genre) {
 		log.info("Cadastrandênero " + genre.getName());
@@ -61,6 +76,7 @@ public class GenreController {
 	}
 
 	@PutMapping("{id}")
+	@CacheEvict(value = "genres", allEntries = true)
 	public Genre update(@PathVariable Long id, @RequestBody Genre genre) {
 		log.info("Atualizando categoria " + id + " para " + genre);
 
