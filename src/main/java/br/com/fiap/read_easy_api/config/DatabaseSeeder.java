@@ -17,13 +17,13 @@ public class DatabaseSeeder {
 
     @PostConstruct
     public void init(){
-        genreRepository.saveAll(
+        var genres = 
             List.of(
-                Genre.builder().name("Horror").icon("Ghost").build(),
-                Genre.builder().name("Romance").icon("Heart").build(),
-                Genre.builder().name("Sci-fi").icon("Atom").build()
-            )
-        );
+                Genre.builder().name("Horror").icon("Ghost").favorite(false).build(),
+                Genre.builder().name("Romance").icon("Heart").favorite(false).build(),
+                Genre.builder().name("Sci-fi").icon("Atom").favorite(true).build()
+            );
+        genreRepository.saveAll(genres);
     }
 
 }

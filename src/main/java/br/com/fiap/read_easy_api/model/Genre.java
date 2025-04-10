@@ -28,6 +28,9 @@ public class Genre {
     @NotBlank(message = "ícone é obrigatório")
     @Size(min = 3, max = 15)
     private String icon;
+
+    @Builder.Default
+    private boolean favorite = false;
     
     public String getName(){
         return name.substring(0, 1).toUpperCase() + name.substring(1);

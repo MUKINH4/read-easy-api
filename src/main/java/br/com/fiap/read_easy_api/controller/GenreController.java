@@ -1,6 +1,8 @@
 package br.com.fiap.read_easy_api.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,6 +92,20 @@ public class GenreController {
 				.orElseThrow(
 						() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
+	}
+
+	@PutMapping("/{id}/favorite")
+	@CacheEvict(allEntries = true, value = "genres")
+	public ResponseEntity<Map<String, Object>> toggleFavorite(@PathVariable Long id) {
+		log.info("Alternando favorito");
+		Genre genre = getGenre(id);
+		genre.setFavorite(!genre.isFavorite());
+		genreRepository.save(genre);
+
+		Map<String, Object> response = new HashMap<>();
+		response.put("id", genre.getId());
+		response.put("favorite", genre.isFavorite());
+		return ResponseEntity.ok(response);
 	}
 
     // @GetMapping
