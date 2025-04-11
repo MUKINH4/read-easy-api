@@ -45,7 +45,8 @@ public class GenreController {
 	@Cacheable("genres")
 	@Operation(
 		tags = "Genres",
-		summary = "Listar gêneros"
+		summary = "Listar gêneros",
+		description = "Lista todos os gêneros cadastrados."
 	)
 	public List<Genre> index() {
 		return genreRepository.findAll();
