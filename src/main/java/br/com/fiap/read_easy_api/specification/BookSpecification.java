@@ -15,16 +15,18 @@ public class BookSpecification {
             List<Predicate> predicates = new ArrayList<>();
  
             if (filter.title() != null && !filter.title().isBlank()) {
-                predicates.add(cb.like(root.get("title"), "%" + filter.title().toLowerCase() + "%"));
+                predicates.add(cb.like(
+                    cb.lower(root.get("title")), "%" + filter.title().toLowerCase() + "%"));
             }
  
             if(filter.startDate() != null && filter.endDate() != null){
                 predicates.add(
-                    cb.between(root.get("date"), filter.startDate(), filter.endDate())
+                    cb.between(
+                        root.get("date"), filter.startDate(), filter.endDate())
                 );
             }
  
-            var arraypreditates = predicates.toArray(new Predicate[0]);
+            var arraypreditates = predicates.toArray(Predicate[]::new);
             return cb.and(arraypreditates);
         };
     }
