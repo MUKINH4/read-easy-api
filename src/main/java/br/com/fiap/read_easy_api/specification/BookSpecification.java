@@ -15,7 +15,9 @@ public class BookSpecification {
             List<Predicate> predicates = new ArrayList<>();
  
             if (filter.title() != null && !filter.title().isBlank()) {
-                predicates.add(cb.like(root.get("title"), "%" + filter.title().toLowerCase() + "%"));
+                predicates.add(cb.like(
+                    cb.lower(root.get("title")), "%" + filter.title().toLowerCase() + "%"));
+                // cb.lower(root.get("description")), "%" + filter.description().toLowerCase() + "%"));
             }
  
             if(filter.startDate() != null && filter.endDate() != null){
@@ -24,8 +26,8 @@ public class BookSpecification {
                 );
             }
  
-            var arraypreditates = predicates.toArray(new Predicate[0]);
-            return cb.and(arraypreditates);
+            var arrayPredicates = predicates.toArray(Predicate[]::new);
+            return cb.and(arrayPredicates);
         };
     }
 }

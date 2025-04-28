@@ -48,8 +48,6 @@ public class Genre {
         this.icon = icon;
     }
 
-
-
     public Long getId() {
         return id;
     }

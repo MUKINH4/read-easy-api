@@ -16,7 +16,8 @@ public class ValidationHandler {
 
         public ValidationErrorMessage(FieldError fieldError) {
             this(fieldError.getField(), fieldError.getDefaultMessage());
-        }}
+        }
+    }
 
     @ExceptionHandler(exception = MethodArgumentNotValidException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
