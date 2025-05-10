@@ -11,6 +11,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 
 import br.com.fiap.read_easy_api.controller.AuthController.Token;
 import br.com.fiap.read_easy_api.model.User;
+import br.com.fiap.read_easy_api.model.enums.UserRole;
 
 @Service
 public class TokenService {
@@ -23,6 +24,7 @@ public class TokenService {
         var jwt = JWT.create()
             .withSubject(user.getId())
             .withClaim("email", user.getEmail())
+            .withClaim("role", user.getRole().toString())
             .withExpiresAt(expiresAt)
             .sign(algorithm);
 
@@ -35,6 +37,7 @@ public class TokenService {
         return User.builder()
                 .id(verifiedToken.getSubject())
                 .email(verifiedToken.getClaim("email").toString())
+                .role(UserRole.valueOf(verifiedToken.getClaim("role").asString()))
                 .build();
     }
 }

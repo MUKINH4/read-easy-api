@@ -3,7 +3,6 @@ package br.com.fiap.read_easy_api.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +25,7 @@ public class AuthController {
     @PostMapping("/login")
     public Token login(@RequestBody Credentials credentials){
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(credentials.email(), credentials.password());
+        var authentication = new UsernamePasswordAuthenticationToken(credentials.email(), credentials.password());
         
         var user = (User) authManager.authenticate(authentication).getPrincipal();
 

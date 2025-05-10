@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import br.com.fiap.read_easy_api.model.Book;
 import br.com.fiap.read_easy_api.model.Genre;
 import br.com.fiap.read_easy_api.model.User;
+import br.com.fiap.read_easy_api.model.enums.UserRole;
 import br.com.fiap.read_easy_api.repository.BookRepository;
 import br.com.fiap.read_easy_api.repository.GenreRepository;
 import br.com.fiap.read_easy_api.repository.UserRepository;
@@ -47,12 +48,16 @@ public class DatabaseSeeder {
 
         bookRepository.saveAll(books);
 
-        var users = List.of(
-            User.builder().email("admin@admin.com").password(passwordEncoder.encode("12345")).build(),
-            User.builder().email("peidao@teste.com").password(passwordEncoder.encode("1234")).build()
-        );
+        userRepository.saveAll(List.of(
+            User.builder().email("admin@admin.com").password(passwordEncoder.encode("12345"))
+            .role(UserRole.ADMIN)
+            .build(),
+            User.builder().email("peidao@teste.com").password(passwordEncoder.encode("1234"))
+            .role(UserRole.USER)
+            .build()
+        ));
 
-        userRepository.saveAll(users);
+        
     }
 
 }
