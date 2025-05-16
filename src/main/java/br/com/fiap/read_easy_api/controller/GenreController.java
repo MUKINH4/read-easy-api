@@ -24,6 +24,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.fiap.read_easy_api.model.Genre;
 import br.com.fiap.read_easy_api.repository.GenreRepository;
+import br.com.fiap.read_easy_api.service.AIAnalistyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
@@ -35,6 +36,9 @@ public class GenreController {
 
     // @Autowired
     // private GenreService genreService;
+
+	@Autowired
+	private AIAnalistyService aiService;
     
     private final Logger log = LoggerFactory.getLogger(getClass());
 	// Injeção de Dependência
@@ -107,6 +111,11 @@ public class GenreController {
 		response.put("id", genre.getId());
 		response.put("favorite", genre.isFavorite());
 		return ResponseEntity.ok(response);
+	}
+
+	@GetMapping("/ai")
+	public String askAI(){
+		return aiService.recommendedBooks();
 	}
 
     // @GetMapping
